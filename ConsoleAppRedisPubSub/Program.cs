@@ -19,8 +19,17 @@ namespace ConsoleAppRedisPubSub
         }
 
         static void OpenConnection()
-        {            
-            redis = ConnectionMultiplexer.Connect(_configuration);
+        {
+            try
+            {
+                redis = ConnectionMultiplexer.Connect(_configuration);
+            }
+            catch
+            {
+                redis = ConnectionMultiplexer.Connect("localhost");
+            }
+
+            Console.WriteLine("Conectado a: " + redis.Configuration);
         }
 
         static void Listener()
